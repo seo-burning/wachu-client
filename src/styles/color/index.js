@@ -1,0 +1,10 @@
+export const SUPER_LIGHT_GRAY = '#F0F0F0';
+export const LIGHT_GRAY = '#9B9B9B';
+export const MAIN_GRAY = '#666666';
+// export const MAIN_COLOR = '#FF0055';
+export const MAIN_COLOR = '#ff6781';
+export const ERROR_BLUE = '#38A1FF';
+export const FACEBOOK = '#3C5A99';
+export const SHOPEE = '#ea501f';
+export const BLACK = '#000000';
+export const WHITE = '#ffffff';
