@@ -210,7 +210,7 @@ const MainNavigator = createBottomTabNavigator(
 const AuthNavigator = createStackNavigator({
   socialAuth: SocialAuthScreen,
   emaiLogin: EmailLoginScreen,
-  emaiSignUp: EmailSignUpScreen,
+  emailSignUp: EmailSignUpScreen,
   forgotPassword: ForgotPasswordScreen,
 });
 

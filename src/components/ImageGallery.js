@@ -15,14 +15,7 @@ import ImageElement from './ImageElement';
 export default class ImageGallery extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      modalVisible: false,
-      modalImage: '',
-    };
-  }
-  setModalVisible(visible, image_uri) {
-    this.setState({ modalImage: image_uri });
-    this.setState({ modalVisible: visible });
+    this.state = {};
   }
 
   getImage() {
@@ -31,7 +24,9 @@ export default class ImageGallery extends PureComponent {
   _renderItem = ({ item }) => (
     <TouchableWithoutFeedback
       onPress={() => {
-        this.setModalVisible(true, item.post_image);
+        this.props.navigation.navigate('Outlink', {
+          outlink: item.post_url,
+        });
       }}
     >
       <View style={styles.imageWrapStyle}>
@@ -46,25 +41,6 @@ export default class ImageGallery extends PureComponent {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Modal
-            style={styles.modal}
-            animationType="fade"
-            transparent
-            visible={this.state.modalVisible}
-            onRequestClose={() => {}}
-          >
-            <View style={styles.modal}>
-              <Text
-                style={styles.text}
-                onPress={() => {
-                  this.setModalVisible(false);
-                }}
-              >
-                X
-              </Text>
-              <ImageElement imgsource={this.state.modalImage} />
-            </View>
-          </Modal>
           <FlatList
             style={{ paddingBottom: 60 }}
             data={this.props.detail_images}
@@ -94,11 +70,6 @@ const styles = StyleSheet.create({
     paddingVertical: '1%',
     height: Dimensions.get('window').height / 5,
     width: '33.333333333333%', //수정 필요.
-  },
-  modal: {
-    flex: 1,
-    padding: 40,
-    backgroundColor: 'rgba(0,0,0,0.9)',
   },
   text: {
     color: '#fff',

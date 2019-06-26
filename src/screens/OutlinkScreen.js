@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { WebView } from 'react-native';
 
 import WebViewPage from '../components/WebViewPage';
+import IconButton from '../components/buttons/IconButton';
 
 export default class OutlinkScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -14,6 +15,17 @@ export default class OutlinkScreen extends Component {
       headerTintColor: '#000000',
       headerTitleStyle: 'bold',
       // gesturesEnabled: false,
+      headerRight: (
+        <View>
+          <IconButton
+            icon={'shopping-bag'}
+            onPressHandler={() => {
+              navigation.navigate('Search');
+            }}
+            iconColor={'black'}
+          />
+        </View>
+      ),
     };
   };
   render() {

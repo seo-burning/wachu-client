@@ -1,4 +1,7 @@
 import React, { PureComponent } from 'react';
+
+import { connect } from 'react-redux';
+
 import {
   StyleSheet,
   Modal,
@@ -6,16 +9,17 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Text,
-  ScrollView,
   FlatList,
 } from 'react-native';
 
 import * as color from '../styles/color';
 import ProfileListSquare from './ProfileListSquare';
-
 import ImageElement from './ImageElement';
 
-export default class ProductSectionGallery extends PureComponent {
+import HeartButton from '../components/buttons/HeartButton';
+import * as actions from '../actions';
+
+class ProductSectionGallery extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,6 +39,8 @@ export default class ProductSectionGallery extends PureComponent {
       }}
     >
       <View style={styles.imageWrapStyle}>
+        <Text>{item.post_url}</Text>
+
         <ImageElement imgsource={item.post_image} style={{ borderRadius: 5 }} />
       </View>
     </TouchableWithoutFeedback>
@@ -65,6 +71,7 @@ export default class ProductSectionGallery extends PureComponent {
               >
                 X
               </Text>
+
               <View
                 style={{
                   flexDirection: 'row',
@@ -91,6 +98,21 @@ export default class ProductSectionGallery extends PureComponent {
                     });
                     this.setModalVisible(false, this.state.modalImage);
                   }}
+                  onLeft={
+                    <View style={{ backgroundColor: 'red' }}>
+                      <HeartButton
+                        color={color.LIGHT_GRAY}
+                        size={25}
+                        selected={this.state.isFavorite}
+                        selectedColor={color.MAIN_COLOR}
+                        togglePress={{
+                          on: () => this.props.addFavoriteProduct(insta_id),
+                          off: () => this.props.delFavoriteProduct(insta_id),
+                        }}
+                      />
+                      <Text>111</Text>
+                    </View>
+                  }
                 />
               </View>
               <ImageElement
@@ -124,10 +146,20 @@ export default class ProductSectionGallery extends PureComponent {
   }
 }
 
+function mapStateToProps({ favorite }) {
+  return {
+    favoritesProduct: favorite.favoritesProdoct,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  actions,
+)(ProductSectionGallery);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: '3%',

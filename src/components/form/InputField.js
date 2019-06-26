@@ -56,8 +56,8 @@ export default class InputField extends Component {
     } = this.props;
     const { secureInput, scaleCheckmarkValue } = this.state;
     const fontSize = labelTextSize || 14;
-    const color = labelColor || color.WHITE;
-    const inputColor = textColor || color.WHITE;
+    const color = labelColor || 'white';
+    const inputColor = textColor || 'white';
     const borderBottom = borderBottomColor || 'transparent';
     const keyboardType = inputType === 'email' ? 'email-address' : 'default';
     const iconScale = scaleCheckmarkValue.interpolate({
@@ -87,7 +87,7 @@ export default class InputField extends Component {
             styles.checkMarkWrapper,
           ]}
         >
-          <Icon name="check" color={color.WHITE} size={20} />
+          <Icon name="check" color={'white'} size={20} />
         </Animated.View>
         <TextInput
           autoCorrect={false}
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   showButtonText: {
-    color: color.WHITE,
+    color: 'white',
     fontWeight: '600',
   },
   checkMarkWrapper: {

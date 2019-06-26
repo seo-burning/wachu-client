@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Asset, AppLoading } from 'expo';
 
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import LogoTitle from '../components/LogoTitle';
-import ProfileListSquare from '../components/ProfileListSquare';
 
-import { Rating } from 'react-native-ratings';
 import * as color from '../styles/color';
-class FavoriteScreen extends Component {
+import ChuABSection from '../components/chu/ChuABSection';
+
+const getChuAPIURL = 'https://www.wachu.shop/api/chu/chu-pick-set/';
+
+class ChuPickScreen extends Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
     return {
       headerStyle: { backgroundColor: color.MAIN_COLOR },
@@ -18,17 +19,63 @@ class FavoriteScreen extends Component {
     };
   };
 
-  ratingCompleted(rating) {
-    console.log('Rating is: ' + rating);
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      data: [],
+      full_data: [],
+      error: null,
+      query: '',
+      index: 0,
+    };
+  }
+
+  componentDidMount() {
+    let token = '041cfee27b7087f32d140d2195cfbfca550237a2';
+    let options = {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        Authorization: 'token ' + token,
+        Accept: 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    };
+    fetch(getChuAPIURL, options)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          isLoading: false,
+          data: responseJson[0].chu_pick_AB_set,
+        });
+      });
+  }
+
+  renderCards() {
+    return this.state.data
+      .map((item, index) => {
+        if (this.state.index > index) {
+          return null;
+        } else {
+          return (
+            <View key={index} style={{ position: 'absolute' }}>
+              <ChuABSection
+                data={item}
+                onPressHandler={() => {
+                  this.setState({ index: this.state.index + 1 });
+                }}
+              />
+            </View>
+          );
+        }
+      })
+      .reverse();
   }
 
   render() {
-    return (
-      <View>
-        <Rating />
-      </View>
-    );
+    return <View>{this.renderCards()}</View>;
   }
 }
 
-export default FavoriteScreen;
+export default ChuPickScreen;

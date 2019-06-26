@@ -8,7 +8,7 @@ export default class RoundedButton extends Component {
   render() {
     const { text, textColor, background, icon, handleOnPress } = this.props;
     const backgroundColor = background || 'transparent';
-    const color = textColor || color.BLACK;
+    const color = textColor || 'black';
     return (
       <TouchableOpacity
         style={[{ backgroundColor }, styles.iosWrapper]}

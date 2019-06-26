@@ -56,7 +56,7 @@ class InfluencerDetailScreen extends Component {
       .then(responseJson => {
         this.setState({
           isLoading: false,
-          data: responseJson.map(item => ({ post_image: item.post_image })),
+          data: responseJson,
         });
       });
   }
@@ -113,7 +113,10 @@ class InfluencerDetailScreen extends Component {
           </View>
         </View>
         <View style={contentContainerStyle}>
-          <ImageGallery detail_images={this.state.data} />
+          <ImageGallery
+            detail_images={this.state.data}
+            navigation={this.props.navigation}
+          />
         </View>
         <View style={buttonConatinerStyle}>
           <CustomButton
